@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX Research Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --ink-mid: #4a4a44;
+    --ink-light: #8a8a80;
+    --paper: #f5f2eb;
+    --paper-warm: #ede9df;
+    --paper-card: #faf8f3;
+    --accent: #2a5c8a;
+    --accent-light: #d6e8f5;
+    --accent-warm: #c8661a;
+    --rule: rgba(26,26,24,0.12);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-name { font-family: var(--serif); font-size: 18px; letter-spacing: -0.01em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-mid); font-size: 13px;
+    font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 2.5rem 5rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, var(--rule) 59px, var(--rule) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, var(--rule) 59px, var(--rule) 60px);
+    opacity: 0.5;
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 1rem; font-weight: 400;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero h1 {
+    font-family: var(--serif); font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.0; letter-spacing: -0.02em; color: var(--ink);
+    max-width: 900px; margin-bottom: 2rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    max-width: 520px; color: var(--ink-mid); font-size: 16px; line-height: 1.8;
+    animation: fadeUp 0.8s 0.2s ease both;
+    margin-bottom: 2.5rem;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .tag {
+    font-size: 12px; font-weight: 400; letter-spacing: 0.03em;
+    padding: 5px 14px; border-radius: 100px;
+    border: 1px solid var(--rule); color: var(--ink-mid);
+    background: var(--paper-card);
+  }
+  .tag.accent { background: var(--accent-light); color: var(--accent); border-color: transparent; }
+
+  /* SECTIONS */
+  section { padding: 5rem 2.5rem; border-bottom: 1px solid var(--rule); }
+  .section-head {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .section-num {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-light); font-weight: 400; white-space: nowrap;
+  }
+  .section-title {
+    font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1; letter-spacing: -0.02em;
+  }
+
+  /* CASE STUDY */
+  .case-study {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--rule); border-radius: 4px;
+    overflow: hidden; margin-bottom: 2rem;
+    background: var(--paper-card);
+  }
+  .case-main { padding: 2.5rem; border-right: 1px solid var(--rule); }
+  .case-sidebar { padding: 2.5rem; background: var(--paper-warm); }
+  .case-label {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 1rem; font-weight: 400;
+  }
+  .case-title {
+    font-family: var(--serif); font-size: 1.6rem; line-height: 1.2;
+    margin-bottom: 0.5rem; letter-spacing: -0.01em;
+  }
+  .case-org {
+    font-size: 13px; color: var(--accent); font-weight: 400;
+    margin-bottom: 1.5rem; letter-spacing: 0.02em;
+  }
+  .case-desc { font-size: 14px; line-height: 1.8; color: var(--ink-mid); margin-bottom: 1.5rem; }
+
+  .process-steps { display: flex; flex-direction: column; gap: 0; }
+  .process-step {
+    display: flex; gap: 1rem; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--rule); align-items: flex-start;
+  }
+  .process-step:last-child { border-bottom: none; }
+  .step-n {
+    font-size: 11px; color: var(--ink-light); font-weight: 400;
+    min-width: 20px; padding-top: 2px; letter-spacing: 0.05em;
+  }
+  .step-text { font-size: 13px; line-height: 1.7; }
+  .step-text strong { font-weight: 500; display: block; margin-bottom: 1px; font-size: 13px; }
+  .step-text span { color: var(--ink-mid); }
+
+  .impact-items { display: flex; flex-direction: column; gap: 1rem; }
+  .impact-item {
+    padding: 1rem; background: var(--paper-card);
+    border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0;
+  }
+  .impact-item p { font-size: 13px; line-height: 1.7; color: var(--ink-mid); }
+  .impact-item strong { color: var(--ink); font-weight: 500; }
+
+  .methods-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .method-tag {
+    font-size: 11px; padding: 4px 10px; border-radius: 3px;
+    background: var(--paper); border: 1px solid var(--rule);
+    color: var(--ink-mid); font-weight: 400;
+  }
+
+  /* ACADEMIC CARDS */
+  .acad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .acad-card {
+    background: var(--paper-card); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 1.75rem; position: relative;
+  }
+  .acad-card-num {
+    font-family: var(--serif); font-size: 4rem; color: var(--rule);
+    position: absolute; top: 1rem; right: 1.5rem; line-height: 1;
+  }
+  .acad-card h3 {
+    font-family: var(--serif); font-size: 1.15rem; line-height: 1.3;
+    margin-bottom: 0.4rem; max-width: 85%;
+  }
+  .acad-card .org { font-size: 12px; color: var(--accent); margin-bottom: 1rem; letter-spacing: 0.02em; }
+  .acad-card p { font-size: 13px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 1rem; }
+  .acad-badges { display: flex; flex-wrap: wrap; gap: 5px; }
+  .badge {
+    font-size: 11px; padding: 3px 9px; border-radius: 3px;
+    background: var(--paper-warm); color: var(--ink-mid);
+    border: 1px solid var(--rule);
+  }
+  .badge.pub { background: var(--accent-light); color: var(--accent); border-color: transparent; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .skill-group { }
+  .skill-group-title {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    font-size: 14px; padding: 0.35rem 0; color: var(--ink-mid);
+    border-bottom: 1px solid var(--rule); display: flex;
+    align-items: center; gap: 8px;
+  }
+  .skill-list li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2.5rem; display: flex;
+    align-items: center; justify-content: space-between;
+  }
+  footer p { font-size: 13px; color: var(--ink-light); }
+  .contact-line { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); }
+
+  /* ANIM */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.25rem 4rem; }
+    section { padding: 3rem 1.25rem; }
+    .case-study { grid-template-columns: 1fr; }
+    .case-main { border-right: none; border-bottom: 1px solid var(--rule); }
+    .acad-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 1rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">UX Research Portfolio</span>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#academic">Academic</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top: 56px;">
+  <div class="hero-bg"></div>
+  <p class="hero-eyebrow">UX Researcher · Research Psychology M.S.</p>
+  <h1>Understanding <em>people</em> to build better experiences</h1>
+  <p class="hero-desc">
+    I combine academic rigor in behavioral research with hands-on industry experience translating user insights into product decisions — from clinical populations to global consumer products.
+  </p>
+  <div class="hero-tags">
+    <span class="tag accent">Mixed-methods research</span>
+    <span class="tag accent">User interviews</span>
+    <span class="tag accent">Usability testing</span>
+    <span class="tag">Qualtrics</span>
+    <span class="tag">R Studio</span>
+    <span class="tag">Miro</span>
+    <span class="tag">Excel</span>
+    <span class="tag">SQL</span>
+  </div>
+</section>
+
+<!-- CASE STUDY: PHILIPS -->
+<section id="work">
+  <div class="section-head reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Industry work</h2>
+  </div>
+
+  <div class="case-study reveal">
+    <div class="case-main">
+      <p class="case-label">Featured case study</p>
+      <h3 class="case-title">Oral Healthcare UX Research — Validating Digital Products & Shaping Strategy</h3>
+      <p class="case-org">Philips · UX Research Intern · Bothell, WA</p>
+      <p class="case-desc">
+        Conducted end-to-end user research across multiple product streams — from mobile app usability to hardware validation — to surface actionable insights for Philips' Oral Healthcare division. Research directly informed 2024 digital product strategy and contributed to urgent quality improvement actions.
+      </p>
+
+      <p class="case-label" style="margin-top: 1.5rem;">Research process</p>
+      <div class="process-steps">
+        <div class="process-step">
+          <span class="step-n">01</span>
+          <div class="step-text">
+            <strong>Discovery & literature review</strong>
+            <span>Synthesized internal and external literature to establish the research landscape for entry-level oral healthcare customers. Delivered strategic insights to the global Oral Healthcare community, generating additional research questions for the product value stream.</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-n">02</span>
+          <div class="step-text">
+            <strong>Quantitative validation analysis</strong>
+            <span>Analyzed 1,000+ data points from toothbrush validation studies using Excel to determine UI pain points and user preferences. Findings were presented directly to the Product Research Center director, informing the 2024 digital product roadmap.</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-n">03</span>
+          <div class="step-text">
+            <strong>Moderated user interviews</strong>
+            <span>Conducted remote user interviews for a mobile app usability study, evaluating navigation patterns and end-to-end user experience. Synthesized findings into structured recommendations for cross-functional stakeholders.</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-n">04</span>
+          <div class="step-text">
+            <strong>Qualitative research & synthesis</strong>
+            <span>Co-designed advertising concepts for high-end power toothbrushes through qualitative research, identifying emerging trends and synthesizing findings to inform new feature design decisions.</span>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-n">05</span>
+          <div class="step-text">
+            <strong>Reporting & communication</strong>
+            <span>Produced monthly and quarterly user research reports using standardized slide deck templates, delivering translated findings and recommendations to global stakeholders across the Oral Healthcare division.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="methods-grid">
+        <span class="method-tag">User interviews</span>
+        <span class="method-tag">Usability testing</span>
+        <span class="method-tag">Literature review</span>
+        <span class="method-tag">Quantitative analysis</span>
+        <span class="method-tag">Qualitative synthesis</span>
+        <span class="method-tag">Qualtrics</span>
+        <span class="method-tag">Excel</span>
+        <span class="method-tag">Miro</span>
+      </div>
+    </div>
+
+    <div class="case-sidebar">
+      <p class="case-label">Impact & outcomes</p>
+      <div class="impact-items">
+        <div class="impact-item">
+          <p><strong>2024 digital product strategy</strong> — Analysis of 1,000+ validation data points directly informed the Product Research Center director's product roadmap decisions.</p>
+        </div>
+        <div class="impact-item">
+          <p><strong>CAPA plan contribution</strong> — Usability findings provided clear, prioritized insights for a Corrective and Preventive Actions plan, enabling urgent quality improvements.</p>
+        </div>
+        <div class="impact-item">
+          <p><strong>Global knowledge sharing</strong> — Research translated and delivered to Philips' global Oral Healthcare community, generating new research questions for the product value stream.</p>
+        </div>
+        <div class="impact-item">
+          <p><strong>New product marketing</strong> — Qualitative advertising research identified key feature trends and user preferences that shaped marketing strategy for an upcoming product launch.</p>
+        </div>
+      </div>
+
+      <p class="case-label" style="margin-top: 2rem;">Deliverables</p>
+      <div class="acad-badges" style="margin-top: 0.5rem;">
+        <span class="badge pub">Monthly research reports</span>
+        <span class="badge pub">Quarterly research decks</span>
+        <span class="badge pub">CAPA recommendations</span>
+        <span class="badge pub">Usability findings synthesis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMIC -->
+<section id="academic">
+  <div class="section-head reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Academic research</h2>
+  </div>
+
+  <div class="acad-grid">
+    <div class="acad-card reveal">
+      <span class="acad-card-num">01</span>
+      <h3>Driving research direction through literature synthesis & study design</h3>
+      <p class="org">Graduate Student Researcher · SPU Psychology Lab · Dec 2025 – Present</p>
+      <p>
+        Contribute to the design of new study series by conducting literature and systematic reviews, leading participant recruitment, and managing data extraction and cleaning — work that directly informs the lab director's decisions and shapes new research directions for the department.
+      </p>
+      <p>
+        Produce weekly synthesis reports identifying patterns and both unique and shared findings across 20+ articles, applying critical analysis to surface insights. Apply research and synthesis skills at key study design checkpoints, fostering discussions that generate new research directions — co-authoring multiple studies on adolescent and TBI patient well-being and the impact on parenting outcomes.
+      </p>
+      <div class="acad-badges">
+        <span class="badge pub">Current role</span>
+        <span class="badge pub">Co-authorship</span>
+        <span class="badge">Literature review</span>
+        <span class="badge">Systematic review</span>
+        <span class="badge">Data extraction & cleaning</span>
+        <span class="badge">Participant recruitment</span>
+        <span class="badge">Weekly reporting</span>
+      </div>
+    </div>
+
+    <div class="acad-card reveal">
+      <span class="acad-card-num">02</span>
+      <h3>Social participation & life satisfaction in TBI patients: the moderating role of binge drinking</h3>
+      <p class="org">Master's Thesis · Seattle Pacific University</p>
+      <p>
+        Examined how binge drinking moderates the relationship between social participation and life satisfaction in young adults (18–25) two years post-TBI. Used the TBI Model Systems National Database and validated psychometric instruments (PART-O, SWLS) to conduct moderation analysis on a large secondary dataset.
+      </p>
+      <p>
+        Findings revealed a protective effects of social engagement during TBI recovery — with direct implications for clinical intervention design and program targeting.
+      </p>
+      <div class="acad-badges">
+        <span class="badge pub">Conference presentation</span>
+        <span class="badge">Secondary data analysis</span>
+        <span class="badge">Moderation analysis</span>
+        <span class="badge">R Studio</span>
+        <span class="badge">Survey instruments</span>
+        <span class="badge">PART-O · SWLS</span>
+      </div>
+    </div>
+
+    <div class="acad-card reveal">
+      <span class="acad-card-num">03</span>
+      <h3>Family relationships & divorce: systematic review & study design</h3>
+      <p class="org">Research Practicum · SPU Clinical Psychology Lab</p>
+      <p>
+        Designed a new series of studies on family dynamics and divorce outcomes using systematic review methodology. Collaborated with lead authors across the full research lifecycle — from study conceptualization to participant recruitment, manuscript writing, and research poster design.
+      </p>
+      <p>
+        Translated complex findings into actionable insights for interdisciplinary teams, practicing clear research communication across academic and applied contexts.
+      </p>
+      <div class="acad-badges">
+        <span class="badge pub">Research poster</span>
+        <span class="badge">Systematic review</span>
+        <span class="badge">Study design</span>
+        <span class="badge">Participant recruitment</span>
+        <span class="badge">Research writing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-head reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Skills & tools</h2>
+  </div>
+
+  <div class="skills-grid reveal">
+    <div class="skill-group">
+      <p class="skill-group-title">Research methods</p>
+      <ul class="skill-list">
+        <li>Moderated user interviews</li>
+        <li>Usability testing</li>
+        <li>Survey design & analysis</li>
+        <li>Secondary data analysis</li>
+        <li>Systematic review</li>
+        <li>Literature review</li>
+        <li>Qualitative synthesis</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Tools & software</p>
+      <ul class="skill-list">
+        <li>Miro</li>
+        <li>R Studio</li>
+        <li>Excel (data analysis)</li>
+        <li>SQL</li>
+        <li>PowerPoint / Slides</li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Core competencies</p>
+      <ul class="skill-list">
+        <li>Insight communication</li>
+        <li>Cross-functional collaboration</li>
+        <li>Research report writing</li>
+        <li>Mixed-methods design</li>
+        <li>Psychometric instruments</li>
+        <li>Behavioral research</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <p class="contact-line">Let's connect</p>
+  <p style="font-size:13px; color: var(--ink-light); max-width: 320px; text-align: right;">
+    kimitiate@gmail.com</li>
+    https://www.linkedin.com/in/thienkimt/ - Seattle, WA
+  </p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
